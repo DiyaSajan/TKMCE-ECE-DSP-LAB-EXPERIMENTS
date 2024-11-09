@@ -1,0 +1,23 @@
+clc;							 	
+clear all;							 
+close all;							
+wc=0.5*pi;							                %Cut-off frequency radians/second 
+N=input('enter the value of N: ');				    %Get the no: of samples
+alpha=(N-1)/2; 						                %Center of symmetry
+eps=0.001;						 	                %To avoid indeterminate form
+n=0:1:N-1;						 	                %No: of points in figure
+hd=sin(wc*(n-alpha+eps))./(pi*(n-alpha+eps));       %Filter coefficients 
+wr=boxcar(N);						                %To find the rectangular window sequence
+hn=hd.*wr'; 							            %Filter coefficients using window sequence							
+w=0:0.01:pi;							            %To define the length of x-axis to the plot result
+h=freqz(hn,1,w);						            %Frequency response 
+subplot(2,1,1);							            %Divide the figure window to plot frequency				
+plot(w/pi,10*log10(abs(h))); 					    %Plot the response
+title('Low Pass Filter Using Rectangular Window'); 	
+xlabel('Normalized Frequency');				
+ylabel('Magnitude in dB');		
+subplot(2,1,2);
+stem(wr);  						
+title(' Rectangular Window sequence'); 		
+xlabel('No:of samples');					
+ylabel('Amplitude'); 						

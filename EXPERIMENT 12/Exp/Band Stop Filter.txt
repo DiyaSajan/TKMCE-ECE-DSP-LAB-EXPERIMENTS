@@ -1,0 +1,28 @@
+clc;
+clf;
+close all;
+clear all;
+
+N=input('enter the value of N: ');			 	
+wc1=0.25*pi; 	                            %Lower cut-off frequency in %radians/second 
+wc2=0.75*pi;	                            %Upper cut-off frequency in %radians/second 
+alpha=(N-1)/2;						        %Center of symmetry
+eps=0.001;							        %To avoid indeterminate form
+n=0:1:N-1; 							        %No: of points in figure
+hd=(sin(wc1*(n-alpha+eps))-sin(wc2*(n-alpha+eps))+sin(pi*(n-alpha+eps)))./(pi*(n- alpha+eps));  		 
+wr=boxcar(N); 						    %To find the rectangular window sequence
+hn=hd.*wr'; 							%Filter coefficients using window sequence
+w=0:0.01:pi;							%To define the length of x-axis to plot the result 
+h=freqz(hn,1,w);					 	%Frequency response
+subplot(2,1,1); 						
+plot(w/pi,10*log10(abs(h))); 				 	
+title('Bandstop filter using Rectangular window ');		
+xlabel('Normalized frequency'); 				
+ylabel('Magnitude in dB');	
+grid on;
+subplot(2,1,2); 						
+stem(wr);							 
+title('Bandstop filter using Rectangular window ');		
+xlabel('No: of samples'); 					
+ylabel('Amplitude'); 						
+grid on;
