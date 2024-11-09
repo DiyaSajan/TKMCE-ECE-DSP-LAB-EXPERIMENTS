@@ -1,0 +1,9 @@
+Linear Convolution Output
+
+4
+11
+20
+30
+20
+11
+4 
